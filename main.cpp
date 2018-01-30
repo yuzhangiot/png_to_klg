@@ -26,6 +26,7 @@
 #define NONE "\033[m"
 #define RED "\033[0;32;31m"
 
+using namespace std;
 
 extern char *optarg;
 extern int optind;
@@ -42,6 +43,7 @@ std::string strWorkingDir;
 
 bool g_bFlag_reverse = false;
 bool g_bFlag_TUM = false;
+bool g_bFlag_RAW = false;
 double g_dScale = 5000;//depth scale
 
 
@@ -77,12 +79,25 @@ void convertToKlg(
                         getcwd(NULL, 0)) + "/" +
                         it->second.first;
 
-
         cv::Mat depth = imread(strAbsPathDepth.c_str(), cv::IMREAD_UNCHANGED);
-
-        double depthScale = g_dScale;
-        depth.convertTo(depth, CV_16UC1, 1000 * 1.0 / depthScale);
-
+	double depthScale = g_dScale;
+        if(g_bFlag_RAW) {
+		cvtColor(depth, depth, CV_BGR2GRAY); // convert from 3C to 1C
+		depth.convertTo(depth, CV_16UC1, 255 * 1000 * 1.0 / depthScale); // from 0-255 to 0-65535
+	}
+	else {
+        	depth.convertTo(depth, CV_16UC1, 1000 * 1.0 / depthScale);
+	}
+	//for debug purpose
+	/*	
+	for(int i = 0; i < depth.rows; ++i) {
+                string temp = "";
+                for(int j = 0; j < depth.cols; ++i) {
+                        cout << depth << endl;
+                }
+        }
+        break;
+	*/
         int32_t depthSize = depth.total() * depth.elemSize();
 
         std::string strAbsPath = std::string(
@@ -255,7 +270,11 @@ int main(int argc, char* argv[])
                 option_count++;
                 sscanf(argv[optind], "%lf", &g_dScale);
                 break;
-            default:
+            case 'a':
+		option_count++;
+		g_bFlag_RAW = true;
+		break;
+	    default:
                 break;
         }
     }

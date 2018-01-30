@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.6.0)
+set(CMAKE_CXX_STANDARD 11)
 
 set(OpenCV_DIR $ENV{OpenCV_DIR249})
 INCLUDE_DIRECTORIES($ENV{OpenCV_DIR249}/include)
