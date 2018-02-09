@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -245,7 +246,7 @@ int main(int argc, char* argv[])
     std::string strKlgFileName;
 
     int c = 0;
-    while((c = getopt(argc, argv, "worts")) != -1)
+    while((c = getopt(argc, argv, "wortsa")) != -1)
     {
         switch(c)
         {

@@ -30,22 +30,35 @@ def main():
         sys.exit(1)
 
     mypath = sys.argv[1]
+    opt = sys.argv[2]
     print(mypath)
+    print(opt)
     
-
     rgbfiles = [f for f in listdir(mypath+'/rgb') if isfile(join(mypath+'/rgb', f))]
+    # print(rgbfiles)
     depthfiles = [f for f in listdir(mypath+'/depth') if isfile(join(mypath+'/depth', f))]
+    if(opt == '0'):
+        intersection = list(set(rgbfiles) & set(depthfiles))
+        intersection.sort(key=natural_key)
+        #print(onlyfiles)
+        
+        timeFile(intersection, mypath, 'rgb')
+        timeFile(intersection, mypath, 'depth')
+    elif(opt == '1'):
+        intersection_rgb = list(set(rgbfiles))
+        intersection_rgb.sort(key=natural_key)
+        intersection_depth = list(set(depthfiles))
+        intersection_depth.sort(key=natural_key)
 
-    intersection = list(set(rgbfiles) & set(depthfiles))
+        timeFile(intersection_rgb, mypath, 'rgb')
+        timeFile(intersection_depth, mypath, 'depth')
+    else:
+        print("wrong option")
+        return
 
 
 
-
-    intersection.sort(key=natural_key)
-    #print(onlyfiles)
     
-    timeFile(intersection, mypath, 'rgb')
-    timeFile(intersection, mypath, 'depth')
 
 
 if __name__ == "__main__":
