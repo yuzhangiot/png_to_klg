@@ -84,7 +84,7 @@ void convertToKlg(
 	double depthScale = g_dScale;
         if(g_bFlag_RAW) {
 		cvtColor(depth, depth, CV_BGR2GRAY); // convert from 3C to 1C
-		depth.convertTo(depth, CV_16UC1, 255 * 1000 * 1.0 / depthScale); // from 0-255 to 0-65535
+		depth.convertTo(depth, CV_16UC1, 255 * 1000 * 1.0); // from 0-255 to 0-65535
 	}
 	else {
         	depth.convertTo(depth, CV_16UC1, 1000 * 1.0 / depthScale);
