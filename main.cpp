@@ -87,18 +87,24 @@ void convertToKlg(
 		depth.convertTo(depth, CV_16UC1, 255 * 1000 * 1.0); // from 0-255 to 0-65535
 	}
 	else {
-        	depth.convertTo(depth, CV_16UC1, 1000 * 1.0 / depthScale);
+        	depth.convertTo(depth, CV_16UC1, 1000.0 * 1.0 / float(depthScale));
 	}
 	//for debug purpose
-	/*	
-	for(int i = 0; i < depth.rows; ++i) {
-                string temp = "";
-                for(int j = 0; j < depth.cols; ++i) {
-                        cout << depth << endl;
-                }
-        }
-        break;
-	*/
+	// double m_min, m_max;
+	// for(int i = 0; i < depth.rows; ++i) {
+ //                string temp = "";
+ //                for(int j = 0; j < depth.cols; ++i) {
+ //                        // cout << depth << " ";
+ //                    auto temp = depth.at<uchar>(i,j);
+ //                    // m_max = depth.at<uchar>(i,j) > m_max ? depth.at<uchar>(i,j) : m_max;
+ //                    // m_min = depth.at<uchar>(i,j) < m_min ? depth.at<uchar>(i,j) : m_min;
+ //                }
+ //        }
+        // minMaxLoc(depth, &m_min, &m_max);
+        // cout << "max: " << m_max;
+        // cout << "min: " << m_min;
+        // break;
+	
         int32_t depthSize = depth.total() * depth.elemSize();
 
         std::string strAbsPath = std::string(
